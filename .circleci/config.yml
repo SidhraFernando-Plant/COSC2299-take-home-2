@@ -6,9 +6,11 @@ jobs:
       IMAGE_NAME: sidhra/sept-takehome
     working_directory: ~/circleci-node
     docker:
-      - image: "circleci/node:10"
+      - image: circleci/node:10
       - image: circleci/buildpack-deps:stretch
     steps:
+      - setup_remote_docker:
+        version: 19.03.13
       - checkout
       - run: npm install
       - run: docker build -t $IMAGE_NAME:latest .
