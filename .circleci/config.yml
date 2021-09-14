@@ -2,9 +2,22 @@ version: 2.1
 
 jobs:
   build:
+    environment:
+      IMAGE_NAME: sidhra/sept-takehome
     working_directory: ~/circleci-node
     docker:
       - image: "circleci/node:10"
     steps:
       - checkout
       - run: npm install
+      - run: 
+        name: Build Docker Image
+        command: docker build -t $IMAGE_NAME:latest .
+workflows:
+  version: 2
+  build-master:
+    jobs:
+      - build:
+        filters:
+          branches:
+            only: master
